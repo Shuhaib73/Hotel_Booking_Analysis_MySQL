@@ -48,7 +48,7 @@ WHERE adr = 5400;
 -- 1. This Query calculates the Percentage of Canceled and Non-Canceled Reservation  
 SELECT 
 	is_canceled, 
-    ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking) * 100, 2) AS canceled_per
+    	ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking) * 100, 2) AS canceled_per
 FROM hotel_booking
 GROUP BY is_canceled;
 
@@ -59,8 +59,8 @@ FROM hotel_booking;
 -- 2. This query provides insights into the cancellation rates specifically for "Resort Hotel" bookings.
 SELECT 
 	hotel, 
-    is_canceled, 
-    ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'Resort Hotel') * 100, 2) AS canceled_per
+    	is_canceled, 
+    	ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'Resort Hotel') * 100, 2) AS canceled_per
 FROM hotel_booking
 WHERE hotel = 'Resort Hotel'
 GROUP BY is_canceled, hotel;
@@ -68,8 +68,8 @@ GROUP BY is_canceled, hotel;
 -- 3. This query provides insights into the cancellation rates specifically for "City Hotel" bookings.
 SELECT 
 	hotel, 
-    is_canceled, 
-    ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'City Hotel') * 100, 2) AS canceled_per
+    	is_canceled, 
+    	ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'City Hotel') * 100, 2) AS canceled_per
 FROM hotel_booking
 WHERE hotel = 'City Hotel'
 GROUP BY is_canceled, hotel;
@@ -78,7 +78,7 @@ GROUP BY is_canceled, hotel;
 SELECT 
 	hotel, 
 	is_canceled, 
-    MONTH(reservation_status_date) as Months, ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'Resort Hotel') * 100, 2) AS Canceled_per
+    	MONTH(reservation_status_date) as Months, ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'Resort Hotel') * 100, 2) AS Canceled_per
 FROM hotel_booking
 WHERE hotel = 'Resort Hotel'
 GROUP BY hotel, is_canceled, MONTH(reservation_status_date)
@@ -87,8 +87,8 @@ ORDER BY Canceled_per DESC;
 -- 5. This Query highlights the months with the highest cancellation rates for 'City Hotel' bookings, offering insights into seasonal patterns
 SELECT 
 	hotel, 
-    is_canceled, 
-    MONTH(reservation_status_date) as Months, ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'City Hotel') * 100, 2) AS Canceled_per
+    	is_canceled, 
+    	MONTH(reservation_status_date) as Months, ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE hotel = 'City Hotel') * 100, 2) AS Canceled_per
 FROM hotel_booking
 WHERE hotel = 'City Hotel'
 GROUP BY hotel, is_canceled, MONTH(reservation_status_date)
@@ -106,7 +106,7 @@ ORDER BY total_adr DESC;
 -- 7. This SQL query analyzes the cancellation rates of reservations by country, highlighting the top 10 countries with the highest cancellation percentages.
 SELECT 
 	country, 
-    ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE is_canceled = 1) * 100, 2) AS canceled_per
+    	ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE is_canceled = 1) * 100, 2) AS canceled_per
 FROM hotel_booking
 WHERE is_canceled = 1
 GROUP BY country 
@@ -120,7 +120,7 @@ WITH T1 AS
 SELECT 
 	market_segment, 
 	COUNT(*) AS Total_Bookings,
-    ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking) * 100, 2) AS Booking_per
+    	ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking) * 100, 2) AS Booking_per
 FROM hotel_booking
 GROUP BY market_segment
 -- ORDER BY Total_Bookings DESC
@@ -130,17 +130,17 @@ T2 AS
 SELECT 
 	market_segment,
 	COUNT(*) AS Total_cancelations,
-    ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE is_canceled = 1) * 100, 2) AS canceled_per
+    	ROUND(COUNT(*) / (SELECT COUNT(*) FROM hotel_booking WHERE is_canceled = 1) * 100, 2) AS canceled_per
 FROM hotel_booking
 WHERE is_canceled = 1
 GROUP BY market_segment, is_canceled
 ) 
 SELECT 
 	T1.market_segment, 
-    Total_Bookings, 
-    Booking_per, 
-    Total_cancelations, 
-    canceled_per
+    	Total_Bookings, 
+    	Booking_per, 
+    	Total_cancelations, 
+    	canceled_per
 FROM T1 JOIN T2 
 ON T1.market_segment = T2.market_segment
 ORDER BY Booking_per DESC, canceled_per DESC;
